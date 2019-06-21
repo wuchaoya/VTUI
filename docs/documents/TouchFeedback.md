@@ -1,7 +1,7 @@
 # TouchFeedback
 ---
 
-## Usage
+## 用法
 
 ```js
 import { Button, TouchFeedback } from "@/components";
