@@ -1,1 +1,1 @@
-export { default } from './TouchFeedback';
+export { default } from "./TouchFeedback";
