@@ -6,14 +6,9 @@ export default function cloneElement(
   createElement: CreateElement
 ) {
   function cloneVNode(vnode: VNode) {
-    const clonedChildren =
-      vnode.children && vnode.children.map(vnode => cloneVNode(vnode));
-    const cloned = createElement(
-      vnode.tag,
-      Object.assign({}, vnode.data, {
-        style: props.style,
-        on: props.events,
-        class: props.className
+    const clonedChildren = vnode.children && vnode.children.map(vnode => cloneVNode(vnode));
+    const cloned = createElement(vnode.tag,
+      Object.assign({}, vnode.data, {style: props.style, on: props.events, class: props.className
       }),
       clonedChildren
     );
