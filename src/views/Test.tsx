@@ -12,7 +12,7 @@ export default class Test extends tsx.Component<any> {
           activeStyle={{ color: "red" }}
           disabled={false}
         >
-          <Button classNames="button"></Button>
+          <Button classNames="button">按钮</Button>
         </TouchFeedback>
       </div>
     );
