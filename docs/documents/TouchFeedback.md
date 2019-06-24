@@ -7,7 +7,7 @@
 import { Button, TouchFeedback } from "@/components";
 
 <TouchFeedback activeClassName="acitve" activeStyle={{ color: 'red'}} disabled={false}>
-     <Button classNames="button">按钮</Button>
+     <button class="button">按钮</button>
 </TouchFeedback>
 
 ```

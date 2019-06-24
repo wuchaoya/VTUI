@@ -3,6 +3,7 @@ import * as tsx from "vue-tsx-support";
 import classnames from 'classnames';
 import loadSprite from './loadSprite';
 import { IconPropsType } from './PropsType';
+import './style.less';
 
 export interface IconProps extends IconPropsType {
   size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
@@ -15,10 +16,8 @@ export default class Icon extends tsx.Component<IconProps, any> {
   @Prop() type?: string;
   @Prop() nativeClick?: Function;
   @Prop() color?: string;
+  @Prop({default: 'md'}) size?: string;
   
-  static defaultProps = {
-    size: 'md',
-  };
   
   mounted() {
     loadSprite();
@@ -28,9 +27,9 @@ export default class Icon extends tsx.Component<IconProps, any> {
     const { type, className, size, ...restProps } = this.$props;
     const cls = classnames(
       className,
-      'icon',
-      `icon-${type}`,
-      `icon-${size}`,
+      'vt-icon',
+      `vt-icon-${type}`,
+      `vt-icon-${size}`,
     );
     return (
       <svg class={cls} {...restProps}>

@@ -85,8 +85,7 @@ export default class TouchFeedback extends tsx.Component<
 
   render(h: CreateElement) {
     const { disabled, activeClassName, activeStyle } = this.$props;
-
-    const events = disabled
+    let events = disabled
       ? undefined
       : {
           touchstart: this.onTouchStart,
@@ -98,8 +97,9 @@ export default class TouchFeedback extends tsx.Component<
           mouseleave: this.onMouseLeave
         };
     const child: any = Object.values(this.$slots)[0];
+    let { style } = child[0].data ?child[0].data :  child[0].componentOptions.propsData ;
+    let className = child[0].data ?child[0].data.class :  child[0].componentOptions.propsData.class;
     if (!disabled && this.$data.activeState) {
-      let { style, className } = child[0].componentOptions.propsData;
       if (activeStyle !== false) {
         if (activeStyle) {
           style = { ...style, ...activeStyle };
@@ -107,17 +107,9 @@ export default class TouchFeedback extends tsx.Component<
         className = classNames(className, activeClassName);
       }
 
-      return cloneElement(
-        child,
-        {
-          className,
-          style,
-          events
-        },
-        h
-      );
+      return cloneElement(child, {className, style, events}, h);
     }
 
-    return cloneElement(child, { events }, h);
+    return cloneElement(child, { events , className, style,}, h);
   }
 }

@@ -1,93 +1,85 @@
 import { Component, Prop } from "vue-property-decorator";
 import * as tsx from "vue-tsx-support";
+import { VNode, CreateElement } from 'vue';
+import classnames from 'classnames';
+import TouchFeedback from '../TouchFeedback';
+import Icon from '../Icon';
+import {ButtonPropsType} from './PropsType';
+import cloneElement from "@/utils/cloneVNode";
+import './style.less';
 
-import "./style.less";
-
-export enum ButtonTypes {
-  default = "default",
-  primary = "primary",
-  ghost = "ghost",
-  dashed = "dashed",
-  danger = "danger",
-  link = "link"
-}
-
-export enum ButtonShapes {
-  circle = "circle",
-  circleOutline = "circleOutline",
-  round = "round"
-}
-
-export enum ButtonSizes {
-  large = "large",
-  default = "default",
-  small = "small"
-}
-
-export enum ButtonHTMLTypes {
-  submit = "submit",
-  button = "button",
-  reset = "reset"
-}
-
-export interface BaseButtonProps {
-  type?: ButtonTypes;
-  icon?: string;
-  shape?: ButtonShapes;
-  size?: ButtonSizes;
-  loading?: boolean | { delay?: number };
+export interface ButtonProps extends ButtonPropsType {
   prefixCls?: string;
-  classNames?: string;
-  ghost?: boolean;
-  block?: boolean;
+  className?: string;
+  role?: string;
+  inline?: boolean;
+  icon?: VNode;
+  activeClassName?: string;
+  activeStyle?: boolean | string | object;
+  style?: string | object;
+  nativeClick?: Function;
 }
 
-interface ButtonState {
-  loading?: boolean | { delay?: number };
-  hasTwoCNChar: boolean;
-}
-
-export type AnchorButtonProps = {
-  href: string;
-  target?: string;
-  nativeClick?: Function;
-} & BaseButtonProps;
-
-export type NativeButtonProps = {
-  htmlType?: ButtonHTMLTypes;
-  nativeClick?: Function;
-} & BaseButtonProps;
-
-export type ButtonProps = Partial<AnchorButtonProps & NativeButtonProps>;
 
 @Component
-export default class Button extends tsx.Component<ButtonProps, ButtonState> {
-  $vnode: any;
+export default class Button extends tsx.Component<ButtonProps, any> {
 
+  @Prop({default: 'vt-button'}) public prefixCls?: string;
+  @Prop({default: 'large'}) public size?: string;
+  @Prop({default: false}) public inline?: boolean;
+  @Prop({default: false}) public disabled?: boolean;
+  @Prop({default: false}) public loading?: boolean;
+  @Prop({default: 'active'}) public activeStyle?: boolean | string | object;
+  @Prop() public type?: 'primary' | 'warning' | 'ghost';
   @Prop() public nativeClick?: Function;
-  @Prop() public classNames?: string;
-
-  mounted() {}
-
-  handleClick(event: any) {
-    const { nativeClick } = this.$props;
-    nativeClick && nativeClick(event);
-  }
-
-  className() {
-    const { classNames } = this.$props;
-    return classNames;
-  }
-
-  renderButton() {
+  
+  render(h: CreateElement) {
+    const {
+      className, prefixCls, type, size, inline, disabled,
+      icon, loading, activeStyle, activeClassName, nativeClick, ...restProps
+    } = this.$props;
+    
+    const iconType: any = loading ? 'loading' : icon;
+    const wrapCls = classnames(prefixCls, className, {
+      [`${prefixCls}-primary`]: type === 'primary',
+      [`${prefixCls}-ghost`]: type === 'ghost',
+      [`${prefixCls}-warning`]: type === 'warning',
+      [`${prefixCls}-small`]: size === 'small',
+      [`${prefixCls}-inline`]: inline,
+      [`${prefixCls}-disabled`]: disabled,
+      [`${prefixCls}-loading`]: loading,
+      [`${prefixCls}-icon`]: !!iconType,
+    });
+  
+    console.log(wrapCls);
+    const kids = Object.values(this.$slots);
+    
+    let iconEl;
+    if(typeof iconType === 'string') {
+      iconEl = <Icon aria-hidden="true" type={iconType} size={size === 'small' ? 'xxs' : 'md'} className={`${prefixCls}-icon`}/>
+    } else if(iconType) {
+      const rawCls = iconType.componentOptions.propsData;
+      const cls = classnames('vt-icon', `${prefixCls}-icon`, size === 'small' ? 'vt-icon-xxs' : 'vt-icon-md',);
+      iconEl = cloneElement(iconType, {className: rawCls ? `${rawCls} ${cls}` : cls,}, h)
+    }
     return (
-      <button class={this.className()} onClick={this.handleClick}>
-        {Object.values(this.$slots)}
-      </button>
+      <TouchFeedback
+        activeClassName={
+          activeClassName || (activeStyle ? `${prefixCls}-active` : undefined)}
+        disabled={disabled}
+        activeStyle={activeStyle}
+      >
+        <div
+          class={wrapCls}
+          {...restProps}
+          onClick={disabled ? new Function() : (nativeClick || new Function())}
+          aria-disabled={disabled}
+        >
+          {iconEl}
+          {kids}
+        </div>
+      </TouchFeedback>
     );
   }
-
-  render() {
-    return this.renderButton();
-  }
 }
+
