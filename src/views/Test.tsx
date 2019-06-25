@@ -1,19 +1,18 @@
 import { Component } from "vue-property-decorator";
 import * as tsx from "vue-tsx-support";
-import { Grid, Empty } from "@/components";
-
-const data = Array.from(new Array(9)).map((_val, i) => ({
-  icon: "https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png",
-  text: `name${i}`
-}));
+import { Input } from "@/components";
 
 @Component
 export default class Test extends tsx.Component<any> {
   render() {
     return (
       <div style="width: 100%">
-        <Grid dataSource={data} activeStyle={false} />
-        <Empty />
+        <Input
+          type="password"
+          icon="user"
+          error={false}
+          placeholder="请输入您的账号和密码"
+        />
       </div>
     );
   }

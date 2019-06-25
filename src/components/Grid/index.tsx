@@ -53,7 +53,11 @@ export default class Grid extends tsx.Component<GridProps, any> {
           <div
             class={`${prefixCls}-item-inner-content column-num-${columnNum}`}
           >
-            {typeof icon !== 'string' ? icon : <img class={`${prefixCls}-icon`} src={icon} />}
+            {typeof icon !== "string" ? (
+              icon
+            ) : (
+              <img class={`${prefixCls}-icon`} src={icon} />
+            )}
             <div class={`${prefixCls}-text`}>{text}</div>
           </div>
         );
@@ -124,7 +128,6 @@ export default class Grid extends tsx.Component<GridProps, any> {
         </Flex>
       );
     }
-    console.log(rowsArr);
     return rowsArr;
   }
 

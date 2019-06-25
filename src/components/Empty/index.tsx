@@ -1,47 +1,47 @@
-import {VNode} from 'vue';
-import classNames from 'classnames';
-import * as defaultEmptyImg from './empty.svg';
-import * as simpleEmptyImg from './simple.svg';
+import { VNode } from "vue";
+import classNames from "classnames";
+import * as defaultEmptyImg from "./empty.svg";
+import * as simpleEmptyImg from "./simple.svg";
 
-import './style.less';
+import "./style.less";
 
 export interface EmptyProps {
   prefixCls?: string;
   className?: string;
-  style?: string | object ;
-  imageStyle?: string | object ;
+  style?: string | object;
+  imageStyle?: string | object;
   image?: VNode | string;
   description?: VNode | string;
 }
 
-const OriginEmpty = (data) => {
+const OriginEmpty = (data: { props: EmptyProps; children: VNode[] }) => {
   const props: EmptyProps = data.props;
-  const children: VNode[] = data.children
+  const children: VNode[] = data.children;
   const {
     className,
-    prefixCls = 'vt-empty',
+    prefixCls = "vt-empty",
     image = defaultEmptyImg,
-    description = '暂无数据',
+    description = "暂无数据",
     imageStyle,
     ...restProps
   } = props;
-  
+
   let imageNode: any = null;
-  
-  if (typeof image === 'string') {
+
+  if (typeof image === "string") {
     imageNode = <img src={image} />;
   } else {
     imageNode = image;
   }
-  
+
   return (
     <div
       class={classNames(
         prefixCls,
         {
-          [`${prefixCls}-normal`]: image === simpleEmptyImg,
+          [`${prefixCls}-normal`]: image === simpleEmptyImg
         },
-        className,
+        className
       )}
       {...restProps}
     >
@@ -52,8 +52,7 @@ const OriginEmpty = (data) => {
       {children}
     </div>
   );
-}
-
+};
 
 type EmptyType = typeof OriginEmpty & {
   PRESENTED_IMAGE_DEFAULT: string;
