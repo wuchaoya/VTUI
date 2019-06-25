@@ -1,21 +1,20 @@
-import classnames from 'classnames';
+import classnames from "classnames";
 import { Component, Prop } from "vue-property-decorator";
 import * as tsx from "vue-tsx-support";
-import { VNode } from 'vue';
-import { NavBarProps } from './PropsType';
-import './style.less';
+import { VNode } from "vue";
+import { NavBarProps } from "./PropsType";
+import "./style.less";
 
 @Component
 export default class NavBar extends tsx.Component<NavBarProps, any> {
-  
-  @Prop({default: 'vt-navbar'}) public prefixCls?: string;
+  @Prop({ default: "vt-navbar" }) public prefixCls?: string;
   @Prop() public className?: string;
-  @Prop({default: 'light'}) public mode?: 'dark' | 'light';
+  @Prop({ default: "light" }) public mode?: "dark" | "light";
   @Prop() public icon?: VNode | string;
   @Prop() public leftContent?: VNode;
   @Prop() public rightContent?: VNode;
   @Prop() public nativeLeftClick?: Function;
-  
+
   render() {
     const {
       prefixCls,
@@ -27,7 +26,7 @@ export default class NavBar extends tsx.Component<NavBarProps, any> {
       rightContent,
       ...restProps
     } = this.$props;
-    
+
     return (
       <div
         {...restProps}
@@ -36,7 +35,7 @@ export default class NavBar extends tsx.Component<NavBarProps, any> {
         <div
           class={`${prefixCls}-left`}
           role="button"
-          onClick={nativeLeftClick || new Function() }
+          onClick={nativeLeftClick || new Function()}
         >
           {icon ? (
             <span class={`${prefixCls}-left-icon`} aria-hidden="true">

@@ -7,7 +7,7 @@ import { Button} from "@/components";
 
 <div>
        <Button disabled>default disabled</Button>
-        <Button nativeClick={() => console.log('点击')} type="primary">primary</Button>
+        <Button type="primary">primary</Button>
         <Button type="ghost" inline size='small'>warning</Button>
         <Button loading>loading button</Button>
 </div>        

@@ -1,6 +1,6 @@
 export interface ButtonPropsType {
-  type?: 'primary' | 'warning' | 'ghost';
-  size?: 'large' | 'small';
+  type?: "primary" | "warning" | "ghost";
+  size?: "large" | "small";
   disabled?: boolean;
   loading?: boolean;
 }
