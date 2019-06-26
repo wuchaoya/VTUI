@@ -4,3 +4,11 @@ export interface ButtonPropsType {
   disabled?: boolean;
   loading?: boolean;
 }
+
+export interface CountDownPropsType {
+  nativeEnd?: () => void
+  nativeInCountdown?: (time: number, text: string) => void
+  text?: string
+  time?: number
+  autoTrigger?: boolean
+}

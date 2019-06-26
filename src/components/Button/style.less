@@ -1,6 +1,7 @@
 @import '../style/mixins';
 @import '../style/themes/default';
 @buttonPrefixCls: vt-button;
+@countDownButtonPrefixCls: vt-countDown;
 
 .@{buttonPrefixCls} {
   display: block;
@@ -107,4 +108,15 @@
   > .@{buttonPrefixCls}-icon {
     margin-right: 0.5em;
   }
+}
+
+.@{countDownButtonPrefixCls} {
+  font-size: @font-size-base;
+  color: @brand-primary;
+  .hairline-remove('all');
+
+  &-active {
+    color: @color-text-caption;
+  }
+
 }

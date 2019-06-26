@@ -22,6 +22,8 @@ export interface ButtonProps extends ButtonPropsType {
 
 @Component
 export default class Button extends tsx.Component<ButtonProps, any> {
+  static CountDownButton: any;
+  
   @Prop({ default: "vt-button" }) public prefixCls?: string;
   @Prop({ default: "large" }) public size?: string;
   @Prop({ default: false }) public inline?: boolean;
@@ -30,6 +32,7 @@ export default class Button extends tsx.Component<ButtonProps, any> {
   @Prop({ default: "active" }) public activeStyle?: boolean | string | object;
   @Prop() public type?: "primary" | "warning" | "ghost";
   @Prop() public nativeClick?: Function;
+  @Prop() public className?: string
 
   render(h: CreateElement) {
     const {
